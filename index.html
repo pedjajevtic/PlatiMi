@@ -8,6 +8,27 @@
     <!-- <meta property="og:description" content="Preuzmite m-Bank aplikaciju OTP banke" /> -->
     <meta property="og:image" content="https://i.imgur.com/6gyUFqf.png" />
 
+    <script>
+        function downloadImage() {
+        const imageUrl = document.getElementById('qrimage').src;
+
+        fetch(imageUrl)
+            .then(response => response.blob())  
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'slika.jpg'; 
+                document.body.appendChild(a);
+                a.click(); 
+                window.URL.revokeObjectURL(url); 
+                document.body.removeChild(a); 
+            })
+        .catch(() => alert('Preuzimanje nije uspelo!'));
+        }
+    </script>
+	
     <style>
         body {
             padding: 0;
@@ -72,6 +93,18 @@
 	.bottom-wrapper {
 	    position: absolute;
             bottom: 0px;
+	    display: flex;
+            flex-direction: column;
+            align-items: center;
+	 		
+	    button {
+	        padding: 11px 30px;
+                margin: 20px 0px;
+                background-color: #FFFFFF;
+                border: none !important;
+                border-radius: 25px;
+                font-weight: bold;
+	    }
 	}
 
         .app-link {
@@ -109,9 +142,10 @@
         <div class="img-wrapper">
             <img src="https://i.imgur.com/2sMI0rS.png">
         </div>
-        <div class="app-links">
+	<button onclick="downloadImage()">Sačuvaj IPS QR</button>
+        <!-- <div class="app-links">
             <a class="app-link">Zatvori</a>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>
